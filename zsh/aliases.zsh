@@ -11,7 +11,7 @@ if [[ $unamestr == 'Linux' ]]; then
 elif [[ $unamestr == 'Darwin' ]]; then
   platform='darwin'
 fi
-
+alias prm=". ~/prm/prm.sh"
 # YADR support
 alias yav='yadr vim-add-plugin'
 alias ydv='yadr vim-delete-plugin'
@@ -36,7 +36,7 @@ if [[ $platform == 'linux' ]]; then
   alias ll='ls -alh --color=auto'
   alias ls='ls --color=auto'
 elif [[ $platform == 'darwin' ]]; then
-  alias ll='ls -alGh'
+  alias ll='ls++'
   alias ls='ls -Gh'
 fi
 
@@ -59,6 +59,9 @@ if [ $MACVIM_INSTALLED -eq 0 ]; then
   alias vim="mvim -v"
 fi
 
+alias expose='/Users/ryan/Repos/Expose/expose.sh'
+
+alias cp='noglob cp'
 # mimic vim functions
 alias :q='exit'
 
@@ -161,8 +164,8 @@ alias sgi='sudo gem install --no-ri --no-rdoc'
 # TODOS
 # This uses NValt (NotationalVelocity alt fork) - http://brettterpstra.com/project/nvalt/
 # to find the note called 'todo'
-alias todo='open nvalt://find/todo'
-
+alias tl='todo ls'
+alias todo='/Users/ryan/bin/todo/todo.sh'
 # Forward port 80 to 3000
 alias portforward='sudo ipfw add 1000 forward 127.0.0.1,3000 ip from any to any 80 in'
 
@@ -190,6 +193,7 @@ alias spb="git checkout -b \`sp | tail -2 | grep '#' | sed 's/^ //' | sed 's/[^A
 alias hpr='hub pull-request'
 alias grb='git recent-branches'
 
+alias sed='gsed'
 # Finder
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
