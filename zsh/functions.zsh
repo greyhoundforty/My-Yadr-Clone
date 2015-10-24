@@ -18,7 +18,11 @@ function extract {
 }
 
 function hgo {
-	cd ~/hugo && hugo server -t hugo-theme-blueberry-detox --destination="/Users/ryan/Repos/greyhoundforty.github.io" -w
+	cd /Users/ryan/Repos/hugobuild && hugo -D -t nofancy --baseUrl="http://tinybot.io" --destination="/Users/ryan/Repos/greyhoundforty.github.io"
+  cd /Users/ryan/Repos/greyhoundforty.github.io
+  git add . 
+  git commit -am "Hugo autodeply run"
+  git push 
 }
 
 # Usage: scrap 'thing to search for'
