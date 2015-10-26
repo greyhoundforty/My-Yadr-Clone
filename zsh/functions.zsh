@@ -67,7 +67,7 @@ function pwgen { openssl rand -base64 16;echo; }
 
 # Search the .zhistory file
 # Usage: hist thing
-function hist { egrep "$@" $HOME/.zhistory; }
+function hist { egrep "$@" $HOME/*.zhistory; }
 
 # Get human readable number for file permissions
 # Usage: st FILENAME
