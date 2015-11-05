@@ -79,7 +79,16 @@ function ncz { netcat -z -v "$1" "$2"; }
 
 function search_notes { find $HOME/Dropbox/Ryans\ Docs/Work/CST_CSA\ Notes/ -iname "*.md" -print0| xargs -0 egrep "$@" }
 
-function dockip() {
+function dockip {
   docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@"
 }
-# 
+
+function showfiles {
+defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app
+}
+
+function hidefiles {
+defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app
+}
+
+function start_docker { bash -c "clear && DOCKER_HOST=tcp://192.168.99.100:2376 DOCKER_CERT_PATH=/Users/ryan/.docker/machine/machines/default DOCKER_TLS_VERIFY=1 /usr/local/bin/zsh" }
