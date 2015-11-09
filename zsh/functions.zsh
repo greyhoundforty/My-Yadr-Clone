@@ -67,7 +67,7 @@ function pwgen { openssl rand -base64 16;echo; }
 
 # Search the .zhistory file
 # Usage: hist thing
-function hist { egrep "$@" $HOME/*.zhistory; }
+function hist { egrep "$@" $HOME/.zhistory; }
 
 # Get human readable number for file permissions
 # Usage: st FILENAME
@@ -100,4 +100,34 @@ hugo -D -t nofancy --baseUrl="http://tinybot.io" --destination="/Users/ryan/Repo
 cd $HOME/Repos/greyhoundforty.github.io && git add -A
 git commit -m "`date`"
 git push
+}
+
+function tat {
+  path_name="$(basename "$PWD" | tr . -)"
+  session_name=${1-$path_name}
+
+  not_in_tmux() {
+    [ -z "$TMUX" ]
+  }
+
+  session_exists() {
+    tmux list-sessions | sed -E 's/:.*$//' | grep -q "^$session_name$"
+  }
+
+  create_detached_session() {
+    (TMUX='' tmux new-session -Ad -s "$session_name")
+  }
+
+  create_if_needed_and_attach() {
+    if not_in_tmux; then
+      tmux new-session -As "$session_name"
+    else
+      if ! session_exists; then
+        create_detached_session
+      fi
+      tmux switch-client -t "$session_name"
+    fi
+  }
+
+  create_if_needed_and_attach
 }
