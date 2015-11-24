@@ -17,12 +17,18 @@ function extract {
     fi
 }
 
-function hgo {
-	cd /Users/ryan/Repos/hugobuild && hugo -D -t nofancy --baseUrl="http://tinybot.io" --destination="/Users/ryan/Repos/greyhoundforty.github.io"
-  cd /Users/ryan/Repos/greyhoundforty.github.io
-  git add .
-  git commit -am "Hugo autodeply run"
-  git push
+## Function to automatically push hugo blog to Github and trigger CodeShip build
+function hugo_ship {
+cd /Users/ryan/Repos/personal/greyhoundforty.github.io
+hugo -D -t angels-ladder
+git add .
+git commit -am "Blog updated with hgo function on `date`"
+git push
+}
+
+function hugo_local {
+  cd /Users/ryan/Repos/personal/greyhoundforty.github.io
+  hugo server -D -t angels-ladder -w & disown
 }
 
 # Usage: scrap 'thing to search for'

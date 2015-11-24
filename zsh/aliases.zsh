@@ -138,6 +138,7 @@ alias l='less'
 alias lh='ls -alt | head' # see the last modified files
 alias screen='TERM=screen screen'
 alias cl='clear'
+alias frld='source $HOME/.yadr/zsh/functions.zsh'
 
 # Zippin
 alias gz='tar -zcvf'
@@ -205,3 +206,7 @@ alias dbmu='spring rake db:migrate:up'
 alias brewu='brew update  && brew upgrade --all && brew cleanup && brew prune && brew doctor'
 alias slcst='/usr/local/bin/slcli --config ~/.cst'
 alias swift='/usr/local/bin/swift'
+alias _='sudo'
+alias tmn='tmux new-window -n "$@"'
+alias prm=". /Users/ryan/Repos/misc/prm/prm.sh"
+alias dls="python /Users/ryan/Repos/misc/TaskPaper-Parser/tpp.py /Users/ryan/Dropbox/Listacular/Everything.taskpaper"
