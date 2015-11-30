@@ -210,3 +210,4 @@ alias _='sudo'
 alias tmn='tmux new-window -n "$@"'
 alias prm=". /Users/ryan/Repos/misc/prm/prm.sh"
 alias dls="python /Users/ryan/Repos/misc/TaskPaper-Parser/tpp.py /Users/ryan/Dropbox/Listacular/Everything.taskpaper"
+alias grepno="grep --color=never -n -E '.*'"

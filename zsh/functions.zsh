@@ -137,3 +137,5 @@ function tat {
 
   create_if_needed_and_attach
 }
+
+function sld { slcli vs detail "$@" --passwords }
