@@ -139,3 +139,9 @@ function tat {
 }
 
 function sld { slcli vs detail "$@" --passwords }
+function ssd { slcli server detail "$@" --passwords }
+function tinyme_deploy { 
+  cd $HOME/Repos/personal/tinybot.me;
+  hugo -t heather-hugo; 
+  rsync -azv ./public/ root@107.170.132.229:/var/www/html 
+}

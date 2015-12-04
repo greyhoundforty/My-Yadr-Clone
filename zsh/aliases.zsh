@@ -50,6 +50,8 @@ TRAPHUP() {
 alias ae='vim $yadr/zsh/aliases.zsh' #alias edit
 alias ar='source $yadr/zsh/aliases.zsh'  #alias reload
 alias gar="killall -HUP -u \"$USER\" zsh"  #global alias reload
+alias fe='vim $yadr/zsh/functions.zsh'
+alias fr='source $yadr/zsh/functions.zsh'
 
 # vim using
 mvim --version > /dev/null 2>&1
@@ -211,3 +213,4 @@ alias tmn='tmux new-window -n "$@"'
 alias prm=". /Users/ryan/Repos/misc/prm/prm.sh"
 alias dls="python /Users/ryan/Repos/misc/TaskPaper-Parser/tpp.py /Users/ryan/Dropbox/Listacular/Everything.taskpaper"
 alias grepno="grep --color=never -n -E '.*'"
+alias td='tugboat droplets'
