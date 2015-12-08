@@ -1,4 +1,5 @@
-# Usage: extract file.tar.gz
+## Extract common compressed file types
+## Usage: extract file.tar.gz
 function extract {
    if [ -f $1 ] ; then
      case $1 in
@@ -17,7 +18,8 @@ function extract {
     fi
 }
 
-## Function to automatically push hugo blog to Github and trigger CodeShip build
+## Build tinybot.io, commit to Github which triggers a CodeShip build and deploy to webserver
+## Usage: remote_hugo
 function hugo_ship {
 cd /Users/ryan/Repos/personal/greyhoundforty.github.io
 hugo -D -t angels-ladder
@@ -26,21 +28,27 @@ git commit -am "Blog updated with hgo function on `date`"
 git push
 }
 
+## Build a local version of tinybot.io and run it in a Docker container
+## Usage: local_hugo
 function hugo_local {
   cd /Users/ryan/Repos/personal/greyhoundforty.github.io
   hugo server -D -t angels-ladder -w & disown
 }
 
-# Usage: scrap 'thing to search for'
+## Search scrap.md file
+## Usage: scrap 'thing to search for'
 function scrap {
 	find ~/Dropbox/Working_dir/Scrap/ -type f -iname "*.md" -print0|xargs -0 egrep "$1"
 }
 
+## Launch Atom with the given file opened and fork to background
+## Usage: atom file.txt
 function atom {
 	/Applications/Atom.app/Contents/MacOS/Atom "$1" &> /Dev/null &
 }
 
-# Grab file and send to my hastebin server
+## Grab file and send to my hastebin server
+## Usage: haste file.txt
 function haste {
     a=$(cat); curl -X POST -s -d "$a" http://haste.tinybot.io/documents | awk -F '"' '{print "http://haste.tinybot.io/"$4}'; }'"'
   }
@@ -51,63 +59,74 @@ function cdls {
     builtin cd "$argv[-1]" && ls "${(@)argv[1,-2]}"
 }
 
-function notice { echo -e "\e[0;34m:: \e[1;37m${*}\e[0m"; }
+## Used for terminal output. Will print blue :: before whatever phrase you choose
+## Usage: notice 'this is a thing'
+function notice { 
+  echo -e "\e[0;34m:: \e[1;37m${*}\e[0m"; 
+}
 
-# Removes a conflicting ssh-key from the known hosts file
-# Usage: iprem 192.168.0.1
+## Removes a conflicting ssh-key from the known hosts file
+## Usage: iprem 192.168.0.1
 function iprem {
 ssh-keygen -f "$HOME/.ssh/known_hosts" -R $1
 }
 
-# Upload file to transfer.sh amd get back the download URL
-# Usage: transfer /etc/rc.local
-function transfer { if [ $# -eq 0 ]; then echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
-tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }; alias transfer=transfer
-
-
-# Run a mosh connection to a server
-# Usage: msh PORT X.X.X.X
-function msh { mosh --ssh='ssh -p "$1"' "$2"; }
-
-function pwgen { openssl rand -base64 16;echo; }
-
-# Search the .zhistory file
-# Usage: hist thing
-function hist { egrep "$@" $HOME/.zhistory; }
-
-# Get human readable number for file permissions
-# Usage: st FILENAME
-function st { stat -c '%n %a' "$@"; }
-
-# Netcat with the -v flag on a port scan
-# Usage: ncz IP PORT
-function ncz { netcat -z -v "$1" "$2"; }
-
-function search_notes { find $HOME/Dropbox/Ryans\ Docs/Work/CST_CSA\ Notes/ -iname "*.md" -print0| xargs -0 egrep "$@" }
-
-function dockip { docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@" }
-
-function showfiles { defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app }
-
-function hidefiles { defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app }
-
-function start_docker { docker-machine start default && eval "$(docker-machine env default)" }
-
-function local_hugo {
-docker stop local-hugo && docker rm local-hugo
-cd $HOME/Repos/hugobuild &&
-hugo -D -t nofancy --baseUrl="http://tinybot.local:32773" --destination="/Users/ryan/docker_hugo" &&
-docker run -d -P -p 32773:80 -v $HOME/docker_hugo:/usr/share/nginx/html --name local-hugo nginx
+## Run a mosh connection to a server
+## Usage: msh PORT X.X.X.X
+function msh { 
+  mosh --ssh='ssh -p "$1"' "$2"; 
 }
 
-function remote_hugo {
-cd $HOME/Repos/hugobuild &&
-hugo -D -t nofancy --baseUrl="http://tinybot.io" --destination="/Users/ryan/Repos/greyhoundforty.github.io"
-cd $HOME/Repos/greyhoundforty.github.io && git add -A
-git commit -m "`date`"
-git push
+## Generate random 16 character password
+## pwgen
+function pwgen { 
+  openssl rand -base64 16;echo; 
 }
 
+## Search the .zhistory file
+## Usage: hist thing
+function hist { 
+  egrep "$@" $HOME/.zhistory; 
+}
+
+## Get human readable number for file permissions
+## Usage: st FILENAME
+function st { 
+  stat -c '%n %a' "$@"; 
+}
+
+## Netcat with the -v flag on a port scan
+## Usage: ncz IP PORT
+function ncz {
+  netcat -z -v "$1" "$2"; 
+}
+
+## Search master/cpanel/plesk notes from command line
+## Usage: search_notes 'search term'
+function search_notes { 
+  find $HOME/Dropbox/Ryans\ Docs/Work/CST_CSA\ Notes/ -iname "*.md" -print0| xargs -0 egrep "$@" 
+}
+
+## Get the IP of docker machine by name
+## Usage:
+function dockip { 
+  docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@" 
+}
+
+function showfiles { 
+  defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app 
+}
+
+function hidefiles { 
+  defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app 
+}
+
+function start_docker { 
+  docker-machine start default && eval "$(docker-machine env default)" 
+}
+
+##
+##
 function tat {
   path_name="$(basename "$PWD" | tr . -)"
   session_name=${1-$path_name}
@@ -138,10 +157,46 @@ function tat {
   create_if_needed_and_attach
 }
 
-function sld { slcli vs detail "$@" --passwords }
-function ssd { slcli server detail "$@" --passwords }
-function tinyme_deploy { 
+## Get VSI details and passwords
+## Usage: svd 1234567
+function svd { 
+  slcli vs detail "$@" --passwords 
+}
+
+## Get Server details and passwords
+## Usage: ssd 1234567
+function ssd { 
+  slcli server detail "$@" --passwords 
+}
+
+# Deploy tinybot.me hugo site to webserver
+## Usage: tinyme_deploy
+function tinyme_deploy {
   cd $HOME/Repos/personal/tinybot.me;
-  hugo -t heather-hugo; 
-  rsync -azv ./public/ root@107.170.132.229:/var/www/html 
+  hugo -t heather-hugo;
+  rsync -azv ./public/ root@107.170.132.229:/var/www/html
+}
+
+## Get the current transaction for an SL Hardware Server
+## Usage: getsrvtx 123456
+function getsrvtx {
+  slcli --format=raw call-api Hardware_Server getActiveTransaction --id="$@";
+}
+
+## Get the current transaction for an SL VSI
+## Usage: getvstx 123456
+function getvstx {
+  slcli --format=raw call-api Virtual_Guest getActiveTransaction --id="$@";
+}
+
+## Get function definitions
+## Usage: define getvstx
+function define {
+  grep -B2 "$@" "$HOME"/.yadr/zsh/functions.zsh | grep -v "function $@"
+}
+
+## List all the functions in the functions.zsh file 
+## Usage: ls_func
+function ls_func { 
+  grep "{$" .yadr/zsh/functions.zsh |grep function | awk '{print $2 }'; 
 }
