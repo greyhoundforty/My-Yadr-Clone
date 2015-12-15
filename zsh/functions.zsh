@@ -173,8 +173,8 @@ function define {
   grep -B2 "$@" "$HOME"/.yadr/zsh/functions.zsh | grep -v "function $@"
 }
 
-##
-##
+## Use fping to ping a CIDR notated range of IP's
+## Usage: fp 10.30.45.29/28
 function fp { 
   fping -g -r 1 "$@" 
 }
