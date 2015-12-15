@@ -178,3 +178,10 @@ function define {
 function fp { 
   fping -g -r 1 "$@" 
 }
+
+
+## Get a nicely formatted view of things marked as 'later' in doing app
+## Usage: dvl
+function dvl {
+	doing view later |colout "^([ \d:apm]+) ?([>:]) (.*)" green,black,white
+}
