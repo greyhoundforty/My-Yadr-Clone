@@ -191,3 +191,8 @@ function dvl {
 function xen {
   nohup ~/Repos/misc/openxenmanager/openxenmanager & 
 }
+
+function slp { slcli --config ~/.personal "$@" }
+
+
+function todo { ~/Repos/misc/cliist/cliist.py "$@" }
