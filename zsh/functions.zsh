@@ -185,3 +185,9 @@ function fp {
 function dvl {
 	doing view later |colout "^([ \d:apm]+) ?([>:]) (.*)" green,black,white
 }
+
+##
+##
+function xen {
+  nohup ~/Repos/misc/openxenmanager/openxenmanager & 
+}
