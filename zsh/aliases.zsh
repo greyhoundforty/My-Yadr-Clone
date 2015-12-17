@@ -214,3 +214,5 @@ alias prm=". /Users/ryan/Repos/misc/prm/prm.sh"
 alias dls="python /Users/ryan/Repos/misc/TaskPaper-Parser/tpp.py /Users/ryan/Dropbox/Listacular/Everything.taskpaper"
 alias grepno="grep --color=never -n -E '.*'"
 alias td='tugboat droplets'
+alias todo_soon="todo -q 'today, tomorrow'"
+

@@ -186,13 +186,26 @@ function dvl {
 	doing view later |colout "^([ \d:apm]+) ?([>:]) (.*)" green,black,white
 }
 
-##
-##
+## Start openxenmanager and fork it to the background
+## Usage: xen
 function xen {
   nohup ~/Repos/misc/openxenmanager/openxenmanager & 
 }
 
-function slp { slcli --config ~/.personal "$@" }
+## Call the slcli using my personal account
+## Usage: slp vs list (and all other functions)
+function slp { 
+  slcli --config ~/.personal "$@" 
+}
 
+## Alias to use cliist to interact with todoiist
+## Usage: todo "--options task"
+function todo() { 
+  ~/Repos/misc/cliist/cliist.py "$@" 
+}
 
-function todo { ~/Repos/misc/cliist/cliist.py "$@" }
+## Add a quick note to follow up on tomorrow - synced to todoist
+## Usage: followup "task"
+function followup { 
+  todo -a -d tomorrow "$@" --project Follow-Up
+}
