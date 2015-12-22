@@ -38,7 +38,7 @@ function hugo_local {
 ## Search scrap.md file
 ## Usage: scrap 'thing to search for'
 function scrap {
-	find ~/Dropbox/Working_dir/Scrap/ -type f -iname "*.md" -print0|xargs -0 egrep "$1"
+	find "$HOME/Dropbox/Work/CST_CSA_Notes/" -type f -iname "*.md" -print0|xargs -0 egrep "$@" |cut -d ':' -f 2
 }
 
 ## Launch Atom with the given file opened and fork to background
@@ -61,9 +61,7 @@ function cdls {
 
 ## Used for terminal output. Will print blue :: before whatever phrase you choose
 ## Usage: notice 'this is a thing'
-function notice { 
-  echo -e "\e[0;34m:: \e[1;37m${*}\e[0m"; 
-}
+function notice { echo -e "\e[0;34m:: \e[1;37m${*}\e[0m"; }
 
 ## Removes a conflicting ssh-key from the known hosts file
 ## Usage: iprem 192.168.0.1
@@ -71,59 +69,43 @@ function iprem {
 ssh-keygen -f "$HOME/.ssh/known_hosts" -R $1
 }
 
+## Upload file to transfer.sh amd get back the download URL
+## Usage: transfer /etc/rc.local
+function transfer { if [ $# -eq 0 ]; then echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
+tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }; alias transfer=transfer
+
+
 ## Run a mosh connection to a server
 ## Usage: msh PORT X.X.X.X
-function msh { 
-  mosh --ssh='ssh -p "$1"' "$2"; 
-}
+function msh { mosh --ssh='ssh -p "$1"' "$2"; }
 
 ## Generate random 16 character password
 ## pwgen
-function pwgen { 
-  openssl rand -base64 16;echo; 
-}
+function pwgen { openssl rand -base64 16;echo; }
 
 ## Search the .zhistory file
 ## Usage: hist thing
-function hist { 
-  egrep "$@" $HOME/.zhistory; 
-}
+function hist { egrep "$@" $HOME/.zhistory; }
 
 ## Get human readable number for file permissions
 ## Usage: st FILENAME
-function st { 
-  stat -c '%n %a' "$@"; 
-}
+function st { stat -c '%n %a' "$@"; }
 
 ## Netcat with the -v flag on a port scan
 ## Usage: ncz IP PORT
-function ncz {
-  netcat -z -v "$1" "$2"; 
-}
-
-## Search master/cpanel/plesk notes from command line
-## Usage: search_notes 'search term'
-function search_notes { 
-  find $HOME/Dropbox/Ryans\ Docs/Work/CST_CSA\ Notes/ -iname "*.md" -print0| xargs -0 egrep "$@" 
-}
+function ncz { netcat -z -v "$1" "$2"; }
 
 ## Get the IP of docker machine by name
 ## Usage:
-function dockip { 
-  docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@" 
-}
+function dockip { docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@" }
 
-function showfiles { 
-  defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app 
-}
+## Show all files in finder
+## Usage:
+function showfiles { defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app }
 
-function hidefiles { 
-  defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app 
-}
+function hidefiles { defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app }
 
-function start_docker { 
-  docker-machine start default && eval "$(docker-machine env default)" 
-}
+function start_docker { docker-machine start default && eval "$(docker-machine env default)" }
 
 ##
 ##
@@ -159,15 +141,11 @@ function tat {
 
 ## Get VSI details and passwords
 ## Usage: svd 1234567
-function svd { 
-  slcli vs detail "$@" --passwords 
-}
+function svd { slcli vs detail "$@" --passwords }
 
 ## Get Server details and passwords
 ## Usage: ssd 1234567
-function ssd { 
-  slcli server detail "$@" --passwords 
-}
+function ssd { slcli server detail "$@" --passwords }
 
 # Deploy tinybot.me hugo site to webserver
 ## Usage: tinyme_deploy
@@ -195,8 +173,39 @@ function define {
   grep -B2 "$@" "$HOME"/.yadr/zsh/functions.zsh | grep -v "function $@"
 }
 
-## List all the functions in the functions.zsh file 
-## Usage: ls_func
-function ls_func { 
-  grep "{$" .yadr/zsh/functions.zsh |grep function | awk '{print $2 }'; 
+## Use fping to ping a CIDR notated range of IP's
+## Usage: fp 10.30.45.29/28
+function fp { 
+  fping -g -r 1 "$@" 
+}
+
+
+## Get a nicely formatted view of things marked as 'later' in doing app
+## Usage: dvl
+function dvl {
+	doing view later |colout "^([ \d:apm]+) ?([>:]) (.*)" green,black,white
+}
+
+## Start openxenmanager and fork it to the background
+## Usage: xen
+function xen {
+  nohup ~/Repos/misc/openxenmanager/openxenmanager & 
+}
+
+## Call the slcli using my personal account
+## Usage: slp vs list (and all other functions)
+function slp { 
+  slcli --config ~/.personal "$@" 
+}
+
+## Alias to use cliist to interact with todoiist
+## Usage: todo "--options task"
+function todo() { 
+  ~/Repos/misc/cliist/cliist.py "$@" 
+}
+
+## Add a quick note to follow up on tomorrow - synced to todoist
+## Usage: followup "task"
+function followup { 
+  todo -a -d tomorrow "$@" --project Follow-Up
 }
