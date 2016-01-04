@@ -209,3 +209,15 @@ function todo() {
 function followup { 
   todo -a -d tomorrow "$@" --project Follow-Up
 }
+
+function untracked_files_check {
+  expr `git status --porcelain 2>/dev/null| grep "^??" | wc -l`
+}
+
+function notify_untracked {
+  if [[ `untracked_files_check` == "1" ]]; then
+    API="xw8oSkPqF2tz2lgNhmD75t1j5gPwBHKV"
+    MSG=`pwd`
+    curl -u $API: https://api.pushbullet.com/v2/pushes -d type=note -d title="Git Dirs that need commits" -d body="$MSG"
+  fi
+}
