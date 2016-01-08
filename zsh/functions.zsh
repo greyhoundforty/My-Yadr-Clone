@@ -175,8 +175,8 @@ function define {
 
 ## Use fping to ping a CIDR notated range of IP's
 ## Usage: fp 10.30.45.29/28
-function fp { 
-  fping -g -r 1 "$@" 
+function fp {
+  fping -g -r 1 "$@"
 }
 
 
@@ -186,27 +186,22 @@ function dvl {
 	doing view later |colout "^([ \d:apm]+) ?([>:]) (.*)" green,black,white
 }
 
-## Start openxenmanager and fork it to the background
-## Usage: xen
-function xen {
-  nohup ~/Repos/misc/openxenmanager/openxenmanager & 
-}
 
 ## Call the slcli using my personal account
 ## Usage: slp vs list (and all other functions)
-function slp { 
-  slcli --config ~/.personal "$@" 
+function slp {
+  slcli --config ~/.personal "$@"
 }
 
 ## Alias to use cliist to interact with todoiist
 ## Usage: todo "--options task"
-function todo() { 
-  ~/Repos/misc/cliist/cliist.py "$@" 
+function todo {
+  ~/Repos/misc/cliist/cliist.py "$@"
 }
 
 ## Add a quick note to follow up on tomorrow - synced to todoist
 ## Usage: followup "task"
-function followup { 
+function followup {
   todo -a -d tomorrow "$@" --project Follow-Up
 }
 
@@ -220,4 +215,10 @@ function notify_untracked {
     MSG=`pwd`
     curl -u $API: https://api.pushbullet.com/v2/pushes -d type=note -d title="Git Dirs that need commits" -d body="$MSG"
   fi
+}
+
+## List all the functions in this file
+## Usage: functions
+function functions {
+  grep "{$" .yadr/zsh/functions.zsh |grep function | awk '{print $2 }'
 }
