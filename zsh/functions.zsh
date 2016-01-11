@@ -50,8 +50,9 @@ function atom {
 ## Grab file and send to my hastebin server
 ## Usage: haste file.txt
 function haste {
-    a=$(cat); curl -X POST -s -d "$a" http://haste.tinybot.io/documents | awk -F '"' '{print "http://haste.tinybot.io/"$4}'; }'"'
-  }
+  a=$(cat)
+  curl -X POST -s -d "$a" http://haste.testinglab.info/documents | awk -F '"' '{print "http://haste.testinglab.info/"$4}'
+}
 
 # Changes to a directory and lists its contents.
 # Usage: cdls /var/foo/bar
@@ -222,4 +223,13 @@ function notify_untracked {
 ## Usage: functions
 function functions {
   grep "{$" .yadr/zsh/functions.zsh |grep function | awk '{print $2 }'
+}
+
+function lists {
+  find Dropbox/lists -maxdepth 1 -type f -name '*.md' | cut -d '/' -f 3
+}
+
+function eris { 
+  mosh --ssh="ssh -p 3376" ryan@54.183.60.250 
+
 }
