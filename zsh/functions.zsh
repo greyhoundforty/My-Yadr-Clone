@@ -51,7 +51,7 @@ function atom {
 ## Usage: haste file.txt
 function haste {
   a=$(cat)
-  curl -X POST -s -d "$a" http://haste.testinglab.info/documents | awk -F '"' '{print "http://haste.testinglab.info/"$4}'
+  curl -X POST -s -d "$a" http://haste.techbabble.xyz:8080/documents | awk -F '"' '{print "http://haste.techbabble.xyz:8080/"$4}'
 }
 
 # Changes to a directory and lists its contents.
@@ -233,3 +233,14 @@ function eris {
   mosh --ssh="ssh -p 3376" ryan@54.183.60.250 
 
 }
+function bkmrk { grep "$@" $HOME/Library/Application\ Support/Google/Chrome/Default/Bookmarks }
+
+function slr { slcli --format=raw "$@" }
+
+function dsl { doing show later }
+
+function shwrk { doing show later| egrep 'sldn|work|kl|api' }
+
+function shchr { doing show later| egrep 'errand|chore|home|diy' }
+
+function shbill { doing show later| egrep 'bill|pay|topay' } 
