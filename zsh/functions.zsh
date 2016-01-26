@@ -225,18 +225,28 @@ function functions {
   grep "{$" .yadr/zsh/functions.zsh |grep function | awk '{print $2 }'
 }
 
+##
+##
 function lists {
-  find Dropbox/lists -maxdepth 1 -type f -name '*.md' | cut -d '/' -f 3
+  find $HOME/Dropbox/lists -maxdepth 1 -type f -name '*.md' | cut -d '/' -f 3
 }
 
+#
+#
 function eris { 
   mosh --ssh="ssh -p 3376" ryan@54.183.60.250 
-
 }
+
+#
+#
 function bkmrk { grep "$@" $HOME/Library/Application\ Support/Google/Chrome/Default/Bookmarks }
 
+#
+#
 function slr { slcli --format=raw "$@" }
 
+#
+##
 function dsl { doing show later }
 
 function shwrk { doing show later| egrep 'sldn|work|kl|api' }
