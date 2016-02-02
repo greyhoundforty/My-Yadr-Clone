@@ -216,3 +216,4 @@ alias grepno="grep --color=never -n -E '.*'"
 alias td='tugboat droplets'
 alias todo_soon="todo -q 'today, tomorrow'"
 
+alias el='exa -bghHliS'

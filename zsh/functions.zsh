@@ -197,7 +197,7 @@ function slp {
 ## Alias to use cliist to interact with todoiist
 ## Usage: todo "--options task"
 function todo {
-  ~/Repos/misc/cliist/cliist.py "$@"
+ cd ~/Dropbox && na -r && cd - 
 }
 
 ## Add a quick note to follow up on tomorrow - synced to todoist
