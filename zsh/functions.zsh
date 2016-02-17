@@ -44,7 +44,7 @@ function scrap {
 ## Launch Atom with the given file opened and fork to background
 ## Usage: atom file.txt
 function atom {
-	/Applications/Atom.app/Contents/MacOS/Atom "$1" &> /Dev/null &
+	$HOME//Applications/Atom.app/Contents/MacOS/Atom "$1" &> /Dev/null &
 }
 
 ## Grab file and send to my hastebin server
