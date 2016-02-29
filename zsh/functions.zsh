@@ -86,7 +86,7 @@ function pwgen { openssl rand -base64 16;echo; }
 
 ## Search the .zhistory file
 ## Usage: hist thing
-function hist { egrep "$@" $HOME/.zhistory; }
+function hist { egrep "$@" $HOME/.zhistory $HOME/Dropbox/OSX/tycho_pre_reload.zhistory | cut -d ' ' -f 2-; }
 
 ## Get human readable number for file permissions
 ## Usage: st FILENAME
@@ -197,7 +197,7 @@ function slp {
 ## Alias to use cliist to interact with todoiist
 ## Usage: todo "--options task"
 function todo {
- cd ~/Dropbox && na -r && cd - 
+ cd ~/Dropbox && na -r && cd -
 }
 
 ## Add a quick note to follow up on tomorrow - synced to todoist
@@ -210,7 +210,7 @@ function untracked_files_check {
   expr `git status --porcelain 2>/dev/null| grep "^??" | wc -l`
 }
 
-## 
+##
 ##
 function notify_untracked {
   if [[ `untracked_files_check` == "1" ]]; then
@@ -233,8 +233,8 @@ function lists {
 
 #
 #
-function eris { 
-  mosh --ssh="ssh -p 3376" ryan@54.183.60.250 
+function eris {
+  mosh --ssh="ssh -p 3376" ryan@54.183.60.250
 }
 
 #
@@ -247,10 +247,21 @@ function slr { slcli --format=raw "$@" }
 
 #
 ##
-function dsl { doing show later }
 
-function shwrk { doing show later| egrep 'sldn|work|kl|api' }
+function doit {
+if [[ "$1" == "today" ]];then
+  dt=$(date +"%Y-%m-%d")
+  echo "- $2 @start($dt)" >> $HOME/Dropbox/todolist.taskpaper
+elif [[ "$1" == "tomorrow" ]];then
+  dt=$(date -v+1d +"%Y-%m-%d")
+  echo "- $2 @start($dt)" >> $HOME/Dropbox/todolist.taskpaper
+fi
+}
 
-function shchr { doing show later| egrep 'errand|chore|home|diy' }
+function newsetup {
+  curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "http://git.tinylab.info/api/v3/projects/5/snippets/3/raw"
+}
 
-function shbill { doing show later| egrep 'bill|pay|topay' } 
+function ubuntuprivate { 
+  curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "http://git.tinylab.info/api/v3/projects/5/snippets/4/raw";
+}
