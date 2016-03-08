@@ -86,7 +86,9 @@ function pwgen { openssl rand -base64 16;echo; }
 
 ## Search the .zhistory file
 ## Usage: hist thing
-function hist { egrep "$@" $HOME/.zhistory $HOME/Dropbox/OSX/tycho_pre_reload.zhistory | cut -d ' ' -f 2-; }
+function hist { egrep "$@" $HOME/.zhistory | cut -d ';' -f 2 }
+
+function oldhist { egrep "$@" $HOME/Dropbox/OSX/tycho_pre_reload.zhistory |  cut -d ';' -f 2 }
 
 ## Get human readable number for file permissions
 ## Usage: st FILENAME

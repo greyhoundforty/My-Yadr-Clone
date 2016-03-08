@@ -217,3 +217,5 @@ alias td='tugboat droplets'
 alias todo_soon="todo -q 'today, tomorrow'"
 
 alias el='exa -bghHliS'
+
+alias d.='desk .'
