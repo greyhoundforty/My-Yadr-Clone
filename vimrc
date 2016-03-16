@@ -114,7 +114,7 @@ set ignorecase      " Ignore case when searching...
 set smartcase       " ...unless we type a capital
 
 
-:let g:session_autosave = 'no'
+let g:session_autosave = 'no'
 
 " ================ Custom Settings ========================
 so ~/.yadr/vim/settings.vim
