@@ -83,7 +83,7 @@ alias gsh='git show'
 alias gshw='git show'
 alias gshow='git show'
 alias gi='vim .gitignore'
-alias gcm='git ci -m'
+alias gcm='git commit -m'
 alias gcim='git ci -m'
 alias gci='git ci'
 alias gco='git co'
@@ -219,3 +219,5 @@ alias todo_soon="todo -q 'today, tomorrow'"
 alias el='exa -bghHliS'
 
 alias d.='desk .'
+alias dit="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz images -t"
+alias pmj='python -m json.tool'

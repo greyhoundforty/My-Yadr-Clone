@@ -267,3 +267,4 @@ function newsetup {
 function ubuntuprivate { 
   curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "http://git.tinylab.info/api/v3/projects/5/snippets/4/raw";
 }
+function sldn { open http://sldn.softlayer.com/reference/services/"$@" }
