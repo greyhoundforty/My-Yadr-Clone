@@ -27,5 +27,5 @@ else
   end
 endif
 
-colorscheme badwolf
+colorscheme onedark
 set background=dark

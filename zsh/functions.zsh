@@ -235,21 +235,21 @@ function lists {
 
 #
 #
-function eris {
-  mosh --ssh="ssh -p 3376" ryan@54.183.60.250
+
+#
+#
+function bkmrk { 
+  grep "$@" $HOME/Library/Application\ Support/Google/Chrome/Default/Bookmarks 
 }
 
 #
-#
-function bkmrk { grep "$@" $HOME/Library/Application\ Support/Google/Chrome/Default/Bookmarks }
+## Usage:
+function slr { 
+  slcli --format=raw "$@" 
+}
 
 #
-#
-function slr { slcli --format=raw "$@" }
-
-#
-##
-
+## Usage:
 function doit {
 if [[ "$1" == "today" ]];then
   dt=$(date +"%Y-%m-%d")
@@ -260,11 +260,25 @@ elif [[ "$1" == "tomorrow" ]];then
 fi
 }
 
+
+## Usage:
 function newsetup {
   curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "http://git.tinylab.info/api/v3/projects/5/snippets/3/raw"
 }
 
+
+## Usage:
 function ubuntuprivate { 
   curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "http://git.tinylab.info/api/v3/projects/5/snippets/4/raw";
 }
-function sldn { open http://sldn.softlayer.com/reference/services/"$@" }
+
+
+ ## Usage:
+function sldn { 
+  open http://sldn.softlayer.com/reference/services/"$@" 
+}
+
+ ## Usage:
+function getpass { 
+  echo $SLPASS| pbcopy 
+}
