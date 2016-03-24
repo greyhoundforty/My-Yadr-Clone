@@ -279,6 +279,8 @@ function sldn {
 }
 
  ## Usage:
-function getpass { 
-  echo $SLPASS| pbcopy 
-}
+function getpass { echo $SLPASS|pbcopy }
+
+function encode { echo -n $@ | perl -pe's/([^-_.~A-Za-z0-9])/sprintf("%%%02X", ord($1))/seg'; }
+
+function search { encode "$@" | pbcopy && open "https://www.google.com/webhp?hl=en#q=`pbpaste`"; }
