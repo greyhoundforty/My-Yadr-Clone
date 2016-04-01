@@ -204,3 +204,4 @@ alias movie='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Remin
 alias book='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/tracking.taskpaper now -s books'
 alias misc='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/tracking.taskpaper now -s misc'
 alias slm='slcli --config ~/.slmaster'
+alias slp='slcli --config ~/.personal'
