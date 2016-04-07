@@ -99,16 +99,24 @@ function st { stat -c '%n %a' "$@"; }
 function ncz { netcat -z -v "$1" "$2"; }
 
 ## Get the IP of docker machine by name
-## Usage:
+## Usage: dockip CONTAINER_ID
 function dockip { docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@" }
 
 ## Show all files in finder
-## Usage:
-function showfiles { defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app }
+## Usage: showfiles
+function showfiles {
+  defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app }
 
-function hidefiles { defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app }
+  ## Hide all hidden files in finder
+  ## Usage: hidefiles
+function hidefiles {
+  defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app }
 
-function start_docker { docker-machine start default && eval "$(docker-machine env default)" }
+## Start the default local vbox docker-machine
+## Usage: start_docker
+function start_docker {
+  docker-machine start default && eval "$(docker-machine env default)"
+}
 
 ##
 ##
@@ -144,18 +152,14 @@ function tat {
 
 ## Get VSI details and passwords
 ## Usage: svd 1234567
-function svd { slcli vs detail "$@" --passwords }
+function svd {
+  slcli vs detail "$@" --passwords
+}
 
 ## Get Server details and passwords
 ## Usage: ssd 1234567
-function ssd { slcli server detail "$@" --passwords }
-
-# Deploy tinybot.me hugo site to webserver
-## Usage: tinyme_deploy
-function tinyme_deploy {
-  cd $HOME/Repos/personal/tinybot.me;
-  hugo -t heather-hugo;
-  rsync -azv ./public/ root@107.170.132.229:/var/www/html
+function ssd {
+  slcli server detail "$@" --passwords
 }
 
 ## Get the current transaction for an SL Hardware Server
@@ -182,7 +186,6 @@ function fp {
   fping -g -r 1 "$@"
 }
 
-
 ## Get a nicely formatted view of things marked as 'later' in doing app
 ## Usage: dvl
 function dvl {
@@ -208,48 +211,20 @@ function followup {
   todo -a -d tomorrow "$@" --project Follow-Up
 }
 
-function untracked_files_check {
-  expr `git status --porcelain 2>/dev/null| grep "^??" | wc -l`
-}
-
-##
-##
-function notify_untracked {
-  if [[ `untracked_files_check` == "1" ]]; then
-    MSG=`pwd`
-    curl -u "$PUSH_API": https://api.pushbullet.com/v2/pushes -d type=note -d title="Git Dirs that need commits" -d body="$MSG"
-  fi
-}
-
 ## List all the functions in this file
 ## Usage: functions
 function functions {
-  grep "{$" .yadr/zsh/functions.zsh |grep function | awk '{print $2 }'
+  grep "{$" "$HOME/.yadr/zsh/functions.zsh" |grep function | awk '{print $2 }'
 }
 
-##
-##
-function lists {
-  find $HOME/Dropbox/lists -maxdepth 1 -type f -name '*.md' | cut -d '/' -f 3
+## Quickly search chrome bookmarks from the command line
+## Usage: bkmrk 'search string'
+function bkmrk {
+  grep "$@" $HOME/Library/Application\ Support/Google/Chrome/Default/Bookmarks
 }
 
-#
-#
-
-#
-#
-function bkmrk { 
-  grep "$@" $HOME/Library/Application\ Support/Google/Chrome/Default/Bookmarks 
-}
-
-#
-## Usage:
-function slr { 
-  slcli --format=raw "$@" 
-}
-
-#
-## Usage:
+## Testing some todo command line function
+## Usage: doit 1 'thing'
 function doit {
 if [[ "$1" == "today" ]];then
   dt=$(date +"%Y-%m-%d")
@@ -260,27 +235,50 @@ elif [[ "$1" == "tomorrow" ]];then
 fi
 }
 
-
-## Usage:
+## Grab my default install setup for new Ubuntu boxes
+## Usage: newsetup
 function newsetup {
   curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "http://git.tinylab.info/api/v3/projects/5/snippets/3/raw"
 }
 
-
-## Usage:
-function ubuntuprivate { 
+## Grab the example for adding a private network IP to an Ubuntu server
+## Usage: ubuntuprivate
+function ubuntuprivate {
   curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "http://git.tinylab.info/api/v3/projects/5/snippets/4/raw";
 }
 
-
- ## Usage:
-function sldn { 
-  open http://sldn.softlayer.com/reference/services/"$@" 
+## Open a search term for the SLDN in Chrome
+## Usage: SoftLayer_Virtual_Guest
+function sldn {
+  open http://sldn.softlayer.com/reference/services/"$@"
 }
 
- ## Usage:
-function getpass { echo $SLPASS|pbcopy; }
+## Get the current SoftLayer internal password and copy it to the clipboard
+## Usage: getpass
+function getpass {
+  echo $SLPASS| tr -d '\n' | pbcopy
+}
 
+## Encode a search term for use with the 'search' command line
+## Usage: none really
 function encode { echo -n $@ | perl -pe's/([^-_.~A-Za-z0-9])/sprintf("%%%02X", ord($1))/seg'; }
 
-function search { encode "$@" | pbcopy && open "https://www.google.com/webhp?hl=en#q=`pbpaste`"; }
+## Quickly open a google search from the command line
+## search 'string to search'
+function search {
+  encode "$@" | pbcopy && open "https://www.google.com/webhp?hl=en#q=`pbpaste`"; }
+
+## Checkout a new branch based on todays date for working with release notes
+## Usage: start_release_notes
+function start_release_notes {
+ dt=$(date +"%Y%m%d")
+ cd $HOME/Repos/work/githubio_source
+ git checkout -b "$dt".rt_branch
+
+}
+
+## Get the 1pass password
+## Usage: 1pass
+function 1pass {
+  echo "$ONEPASS"| tr -d '\n' | pbcopy
+}

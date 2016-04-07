@@ -205,3 +205,4 @@ alias book='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Remind
 alias misc='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/tracking.taskpaper now -s misc'
 alias slm='slcli --config ~/.slmaster'
 alias slp='slcli --config ~/.personal'
+alias vlc='~/Applications/VLC.app/Contents/MacOS/VLC'
