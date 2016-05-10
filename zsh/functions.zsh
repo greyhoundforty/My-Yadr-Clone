@@ -38,7 +38,7 @@ function hugo_local {
 ## Search scrap.md file
 ## Usage: scrap 'thing to search for'
 function scrap {
-	find "$HOME/Dropbox/Work/CST_CSA_Notes/" -type f -iname "*.md" -print0|xargs -0 egrep "$@" |cut -d ':' -f 2
+	find "$HOME/Work/Notes/Tech_Support/" -type f -iname "*.md" -print0|xargs -0 egrep "$@" |cut -d ':' -f 2
 }
 
 ## Launch Atom with the given file opened and fork to background
@@ -281,4 +281,40 @@ function start_release_notes {
 ## Usage: 1pass
 function 1pass {
   echo "$ONEPASS"| tr -d '\n' | pbcopy
+}
+
+function showtokens { 
+echo "-R —Record: something created—writing, pictures, etc"
+echo "-I —Information: something collect—articles, bookmarks, etc"
+echo "-C —Communication: something exchanged—email, IM, etc"
+echo ".1 —Important documents: backups, finance, taxes, etc"
+echo ".2 —Writing: blog, manuscripts, books, cover letters, reviews, etc"
+echo ".3 —Design and visuals: art, scientific figures, seminar slides, etc"
+echo ".4 —Life: recipes, productivity, vacations, etc"
+echo ".5 —Commerce: transactions, returns, etc"
+}
+
+## Use the maid command to sort downloads folder
+## Usage: sort-downloads
+function sort-downloads { 
+maid clean -fr $HOME/.maid/sort-downloads.rb
+}
+
+function clean-up { 
+maid clean -fr $HOME/.maid/clean-up.rb
+}
+
+function dry-run { 
+  maid clean -nr $HOME/.maid/clean-up.rb
+  maid clean -nr $HOME/.maid/sort-downloads.rb
+}
+
+function pip() {
+  if [ "$1" = "install" -o "$1" = "bundle" ]; then
+      cmd="$1"
+      shift
+      /usr/bin/pip $cmd --user $@
+    else
+      /usr/bin/pip $@
+    fi
 }

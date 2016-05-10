@@ -206,3 +206,8 @@ alias misc='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Remind
 alias slm='slcli --config ~/.slmaster'
 alias slp='slcli --config ~/.personal'
 alias vlc='~/Applications/VLC.app/Contents/MacOS/VLC'
+alias sldev='slcli --config ~/.dev_sl'
+alias update='brewu && apm update -c false'
+alias graph="git log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order"
+
+
