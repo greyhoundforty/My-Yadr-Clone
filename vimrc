@@ -117,3 +117,5 @@ let g:session_autosave = 'no'
 
 " ================ Custom Settings ========================
 so ~/.yadr/vim/settings.vim
+set number
+set relativenumber

@@ -309,12 +309,9 @@ function dry-run {
   maid clean -nr $HOME/.maid/sort-downloads.rb
 }
 
-function pip() {
-  if [ "$1" = "install" -o "$1" = "bundle" ]; then
-      cmd="$1"
-      shift
-      /usr/bin/pip $cmd --user $@
-    else
-      /usr/bin/pip $@
-    fi
+
+##Search archived nvalt notes 
+## Usage: vault SEARCHTERM
+function vault { 
+  find "$HOME/Dropbox/Nvalt/Archive/" -type f -print0 | xargs -0 egrep -i "$@" | cut -d ':' -f 2
 }
