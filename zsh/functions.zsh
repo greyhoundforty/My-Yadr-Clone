@@ -283,7 +283,7 @@ function 1pass {
   echo "$ONEPASS"| tr -d '\n' | pbcopy
 }
 
-function showtokens { 
+function showtokens {
 echo "-R —Record: something created—writing, pictures, etc"
 echo "-I —Information: something collect—articles, bookmarks, etc"
 echo "-C —Communication: something exchanged—email, IM, etc"
@@ -296,22 +296,43 @@ echo ".5 —Commerce: transactions, returns, etc"
 
 ## Use the maid command to sort downloads folder
 ## Usage: sort-downloads
-function sort-downloads { 
+function sort-downloads {
 maid clean -fr $HOME/.maid/sort-downloads.rb
 }
 
-function clean-up { 
+function clean-up {
 maid clean -fr $HOME/.maid/clean-up.rb
 }
 
-function dry-run { 
+function dry-run {
   maid clean -nr $HOME/.maid/clean-up.rb
   maid clean -nr $HOME/.maid/sort-downloads.rb
 }
 
 
-##Search archived nvalt notes 
+##Search archived nvalt notes
 ## Usage: vault SEARCHTERM
-function vault { 
+function vault {
   find "$HOME/Dropbox/Nvalt/Archive/" -type f -print0 | xargs -0 egrep -i "$@" | cut -d ':' -f 2
+}
+
+shorten () {
+	local helpstring="Truncate each line of the input to X characters\n\t-l              Shorten from left side\n\t-s STRING         replace truncated characters with STRING\n\n\t$ ls | shorten -s ... 15"
+	local ellip="" left=false
+	OPTIND=1
+	while getopts "hls:" opt; do
+		case $opt in
+			l) left=true ;;
+			s) ellip=$OPTARG ;;
+			h) echo -e $helpstring; return;;
+			*) return 1;;
+		esac
+	done
+	shift $((OPTIND-1))
+
+	if $left; then
+		cat | sed -E "s/.*(.{${1-70}})$/${ellip}\1/"
+	else
+		cat | sed -E "s/(.{${1-70}}).*$/\1${ellip}/"
+	fi
 }
