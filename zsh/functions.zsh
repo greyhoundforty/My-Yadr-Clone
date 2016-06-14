@@ -177,7 +177,7 @@ function getvstx {
 ## Get function definitions
 ## Usage: define getvstx
 function define {
-  grep -B2 "$@" "$HOME"/.yadr/zsh/functions.zsh | grep -v "function $@"
+  egrep -B2 "$@ {$" ~/.yadr/zsh/functions.zsh | grep -v function
 }
 
 ## Use fping to ping a CIDR notated range of IP's
@@ -214,7 +214,8 @@ function followup {
 ## List all the functions in this file
 ## Usage: functions
 function functions {
-  grep "{$" "$HOME/.yadr/zsh/functions.zsh" |grep function | awk '{print $2 }'
+  egrep "function $@" ~/.yadr/zsh/functions.zsh | awk '{print $2}'
+  #egrep "$@ {$" $HOME/.yadr/zsh/functions.zsh | awk '{print $2}'
 }
 
 ## Quickly search chrome bookmarks from the command line
@@ -283,40 +284,34 @@ function 1pass {
   echo "$ONEPASS"| tr -d '\n' | pbcopy
 }
 
-function showtokens {
-echo "-R —Record: something created—writing, pictures, etc"
-echo "-I —Information: something collect—articles, bookmarks, etc"
-echo "-C —Communication: something exchanged—email, IM, etc"
-echo ".1 —Important documents: backups, finance, taxes, etc"
-echo ".2 —Writing: blog, manuscripts, books, cover letters, reviews, etc"
-echo ".3 —Design and visuals: art, scientific figures, seminar slides, etc"
-echo ".4 —Life: recipes, productivity, vacations, etc"
-echo ".5 —Commerce: transactions, returns, etc"
-}
-
 ## Use the maid command to sort downloads folder
 ## Usage: sort-downloads
 function sort-downloads {
 maid clean -fr $HOME/.maid/sort-downloads.rb
 }
 
+## Run the clean up maid rules
+## Usage: clean-up
 function clean-up {
 maid clean -fr $HOME/.maid/clean-up.rb
 }
 
+## Do a dry run of maid rules
+## Usage: dry-run
 function dry-run {
   maid clean -nr $HOME/.maid/clean-up.rb
   maid clean -nr $HOME/.maid/sort-downloads.rb
 }
 
-
-##Search archived nvalt notes
+## Search archived nvalt notes
 ## Usage: vault SEARCHTERM
 function vault {
   find "$HOME/Dropbox/Nvalt/Archive/" -type f -print0 | xargs -0 egrep -i "$@" | cut -d ':' -f 2
 }
 
-shorten () {
+## Truncate each line of the input to X characters
+## Usage: cat file | shorten
+function shorten {
 	local helpstring="Truncate each line of the input to X characters\n\t-l              Shorten from left side\n\t-s STRING         replace truncated characters with STRING\n\n\t$ ls | shorten -s ... 15"
 	local ellip="" left=false
 	OPTIND=1
@@ -335,4 +330,10 @@ shorten () {
 	else
 		cat | sed -E "s/(.{${1-70}}).*$/\1${ellip}/"
 	fi
+}
+
+## Create a new note in the Unsorted Evernote Notebook
+## Usage: qn TITLE NOTE_CONTENT
+function qn {
+  geeknote create --content "$2" --notebook Unsorted --title "$1"
 }
