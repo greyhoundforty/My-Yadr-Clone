@@ -1,4 +1,4 @@
-## fn extract: Extract common compressed file types. Usage: extract file.tar.gz
+## fn extract: Extract common compressed file types. notice Usage: extract file.tar.gz
 function extract {
    if [ -f $1 ] ; then
      case $1 in
@@ -17,74 +17,49 @@ function extract {
     fi
 }
 
-## Build tinybot.io, commit to Github which triggers a CodeShip build and deploy to webserver
-## Usage: remote_hugo
+## fn hugo_ship: Build local tinylab.info hugo site, commit to Github which triggers a CodeShip build and deploy to webserver.
 function hugo_ship {
-cd /Users/ryan/Repos/personal/greyhoundforty.github.io
+cd "$HOME/Repos/personal/greyhoundforty.github.io"
 hugo -D -t angels-ladder
 git add .
 git commit -am "Blog updated with hgo function on `date`"
 git push
 }
 
-## Build a local version of tinybot.io and run it in a Docker container
-## Usage: local_hugo
-function hugo_local {
-  cd /Users/ryan/Repos/personal/greyhoundforty.github.io
-  hugo server -D -t angels-ladder -w & disown
-}
-
-## Search scrap.md file
-## Usage: scrap 'thing to search for'
+## fn scrap: Search old tech support scrap files. USAGE: scrap 'thing to search for'
 function scrap {
 	find "$HOME/Work/Notes/Tech_Support/" -type f -iname "*.md" -print0|xargs -0 egrep "$@" |cut -d ':' -f 2
 }
 
-## Launch Atom with the given file opened and fork to background
-## Usage: atom file.txt
-function atom {
+## fn atom: Launch Atom with the given file opened and fork to background. Usage: atom file.txt
+function atm {
 	$HOME//Applications/Atom.app/Contents/MacOS/Atom "$1" &> /dev/null &
 }
 
-## Grab file and send to my hastebin server
-## Usage: haste file.txt
-function haste {
-  a=$(cat)
-  curl -X POST -s -d "$a" http://haste.techbabble.xyz:8080/documents | awk -F '"' '{print "http://haste.techbabble.xyz:8080/"$4}'
-}
-
-# Changes to a directory and lists its contents.
-# Usage: cdls /var/foo/bar
+## fn cdls:  Changes to a directory and lists its contents. Usage: cdls /var/foo/bar
 function cdls {
     builtin cd "$argv[-1]" && ls "${(@)argv[1,-2]}"
 }
 
-## Used for terminal output. Will print blue :: before whatever phrase you choose
-## Usage: notice 'this is a thing'
+## fn notice: Used for terminal output emphasis. Usage: notice 'this is a thing'
 function notice { echo -e "\e[0;34m:: \e[1;37m${*}\e[0m"; }
 
-## Removes a conflicting ssh-key from the known hosts file
-## Usage: iprem 192.168.0.1
+## fn iprem: Removes a conflicting ssh-key from the known hosts file. Usage: iprem 192.168.0.1
 function iprem {
 ssh-keygen -f "$HOME/.ssh/known_hosts" -R $1
 }
 
-## Upload file to transfer.sh amd get back the download URL
-## Usage: transfer /etc/rc.local
+## fn transfer: Upload file to transfer.sh amd get back the download URL. Usage: transfer /etc/rc.local
 function transfer { if [ $# -eq 0 ]; then echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
 tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }; alias transfer=transfer
 
-
-## Run a mosh connection to a server
-## Usage: msh PORT X.X.X.X
+## fn msh: Run a mosh connection to a server. Usage: msh PORT X.X.X.X
 function msh { mosh --ssh='ssh -p "$1"' "$2"; }
 
-## Generate random 16 character password
-## pwgen
+## fn pwgen: Generate random 16 character password
 function pwgen { openssl rand -base64 16;echo; }
 
-## Search the .zhistory file
-## Usage: hist thing
+## fn hist: Search the .zhistory file. Usage: hist thing
 function hist { egrep "$@" $HOME/.zhistory | cut -d ';' -f 2 }
 
 function oldhist { egrep "$@" $HOME/Dropbox/OSX/tycho_pre_reload.zhistory |  cut -d ';' -f 2 }
