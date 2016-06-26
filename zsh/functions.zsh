@@ -62,38 +62,27 @@ function pwgen { openssl rand -base64 16;echo; }
 ## fn hist: Search the .zhistory file. Usage: hist thing
 function hist { egrep "$@" $HOME/.zhistory | cut -d ';' -f 2 }
 
+## fn oldhist: Search my pre-reload .zhistory file 
 function oldhist { egrep "$@" $HOME/Dropbox/OSX/tycho_pre_reload.zhistory |  cut -d ';' -f 2 }
 
-## Get human readable number for file permissions
-## Usage: st FILENAME
+## fn st: Get human readable number for file permissions. Usage: st FILENAME
 function st { stat -c '%n %a' "$@"; }
 
-## Netcat with the -v flag on a port scan
-## Usage: ncz IP PORT
+## fn ncz: Netcat with the -v flag on a port scan. Usage: ncz IP PORT
 function ncz { netcat -z -v "$1" "$2"; }
 
-## Get the IP of docker machine by name
-## Usage: dockip CONTAINER_ID
+## fn dockerip: Get the IP of a docker container  by name or ID. Usage: dockip CONTAINER_ID
 function dockip { docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@" }
 
-## Show all files in finder
-## Usage: showfiles
+## fn showfiles: Show all files in finder 
 function showfiles {
   defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app }
 
-  ## Hide all hidden files in finder
-  ## Usage: hidefiles
+## fn hidefiles: Hide all hidden files in finder
 function hidefiles {
   defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app }
 
-## Start the default local vbox docker-machine
-## Usage: start_docker
-function start_docker {
-  docker-machine start default && eval "$(docker-machine env default)"
-}
-
-##
-##
+## fn tat: Create new tmux session from current owrking directory 
 function tat {
   path_name="$(basename "$PWD" | tr . -)"
   session_name=${1-$path_name}
@@ -124,127 +113,69 @@ function tat {
   create_if_needed_and_attach
 }
 
-## Get VSI details and passwords
-## Usage: svd 1234567
+## fn svd: Get VSI details and passwords. Usage: svd 1234567
 function svd {
   slcli vs detail "$@" --passwords
 }
 
-## Get Server details and passwords
-## Usage: ssd 1234567
+## fn ssd: Get Server details and passwords. Usage: ssd 1234567
 function ssd {
   slcli server detail "$@" --passwords
 }
 
-## Get the current transaction for an SL Hardware Server
-## Usage: getsrvtx 123456
+## fn getsrvtx: Get the current transaction for an SL Hardware Server. Usage: getsrvtx 123456
 function getsrvtx {
   slcli --format=raw call-api Hardware_Server getActiveTransaction --id="$@";
 }
 
-## Get the current transaction for an SL VSI
-## Usage: getvstx 123456
+## fn getvstx: Get the current transaction for an SL VSI. Usage: getvstx 123456
 function getvstx {
   slcli --format=raw call-api Virtual_Guest getActiveTransaction --id="$@";
 }
 
-## Get function definitions
-## Usage: define getvstx
-function define {
-  egrep -B2 "$@ {$" ~/.yadr/zsh/functions.zsh | grep -v function
-}
-
-## Use fping to ping a CIDR notated range of IP's
-## Usage: fp 10.30.45.29/28
+## fn fp: Use fping to ping a CIDR notated range of IP's. Usage: fp 10.30.45.29/28
 function fp {
   fping -g -r 1 "$@"
 }
 
-## Get a nicely formatted view of things marked as 'later' in doing app
-## Usage: dvl
-function dvl {
-	doing view later |colout "^([ \d:apm]+) ?([>:]) (.*)" green,black,white
-}
-
-
-## Call the slcli using my personal account
-## Usage: slp vs list (and all other functions)
+## fn slp: Call the slcli using my personal account
 function slp {
   slcli --config ~/.personal "$@"
 }
 
-## Alias to use cliist to interact with todoiist
-## Usage: todo "--options task"
-function todo {
- cd ~/Dropbox && na -r && cd -
-}
-
-## Add a quick note to follow up on tomorrow - synced to todoist
-## Usage: followup "task"
-function followup {
-  todo -a -d tomorrow "$@" --project Follow-Up
-}
-
-## List all the functions in this file
-## Usage: functions
-function functions {
-  egrep "function $@" ~/.yadr/zsh/functions.zsh | awk '{print $2}'
-  #egrep "$@ {$" $HOME/.yadr/zsh/functions.zsh | awk '{print $2}'
-}
-
-## Quickly search chrome bookmarks from the command line
-## Usage: bkmrk 'search string'
+## fn bkmrk: Quickly search chrome bookmarks from the command line. Usage: bkmrk 'search string'
 function bkmrk {
   grep "$@" $HOME/Library/Application\ Support/Google/Chrome/Default/Bookmarks
 }
 
-## Testing some todo command line function
-## Usage: doit 1 'thing'
-function doit {
-if [[ "$1" == "today" ]];then
-  dt=$(date +"%Y-%m-%d")
-  echo "- $2 @start($dt)" >> $HOME/Dropbox/todolist.taskpaper
-elif [[ "$1" == "tomorrow" ]];then
-  dt=$(date -v+1d +"%Y-%m-%d")
-  echo "- $2 @start($dt)" >> $HOME/Dropbox/todolist.taskpaper
-fi
-}
-
-## Grab my default install setup for new Ubuntu boxes
-## Usage: newsetup
+## fn newsetup: Grab my default install setup for new Ubuntu boxes
 function newsetup {
   curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "http://git.tinylab.info/api/v3/projects/5/snippets/3/raw"
 }
 
-## Grab the example for adding a private network IP to an Ubuntu server
-## Usage: ubuntuprivate
+## fn ubuntuprivate: Grab the example for adding a private network IP to an Ubuntu server 
 function ubuntuprivate {
   curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "http://git.tinylab.info/api/v3/projects/5/snippets/4/raw";
 }
 
-## Open a search term for the SLDN in Chrome
-## Usage: SoftLayer_Virtual_Guest
+## fn sldn: Open a search term for the SLDN in Chrome. Usage: SoftLayer_Virtual_Guest
 function sldn {
   open http://sldn.softlayer.com/reference/services/"$@"
 }
 
-## Get the current SoftLayer internal password and copy it to the clipboard
-## Usage: getpass
+## fn getpass: Get the current SoftLayer internal password and copy it to the clipboard
 function getpass {
   echo $SLPASS| tr -d '\n' | pbcopy
 }
 
-## Encode a search term for use with the 'search' command line
-## Usage: none really
+## fn encode: Encode a search term for use with the 'search' command line
 function encode { echo -n $@ | perl -pe's/([^-_.~A-Za-z0-9])/sprintf("%%%02X", ord($1))/seg'; }
 
-## Quickly open a google search from the command line
-## search 'string to search'
+## fn search: Quickly open a google search from the command line. Usage search 'string to search'
 function search {
   encode "$@" | pbcopy && open "https://www.google.com/webhp?hl=en#q=`pbpaste`"; }
 
-## Checkout a new branch based on todays date for working with release notes
-## Usage: start_release_notes
+## fn start_release_notes: Checkout a new branch based on todays date for working with release notes
 function start_release_notes {
  dt=$(date +"%Y%m%d")
  cd $HOME/Repos/work/githubio_source
@@ -252,39 +183,33 @@ function start_release_notes {
 
 }
 
-## Get the 1pass password
-## Usage: 1pass
+## fn 1pass: Get the 1pass password
 function 1pass {
   echo "$ONEPASS"| tr -d '\n' | pbcopy
 }
 
-## Use the maid command to sort downloads folder
-## Usage: sort-downloads
+## fn sort-downloads: Use the maid command to sort downloads folder
 function sort-downloads {
 maid clean -fr $HOME/.maid/sort-downloads.rb
 }
 
-## Run the clean up maid rules
-## Usage: clean-up
+## fn clean-up: Run the clean up maid rules
 function clean-up {
 maid clean -fr $HOME/.maid/clean-up.rb
 }
 
-## Do a dry run of maid rules
-## Usage: dry-run
+## fn dry-run: Do a dry run of maid rules
 function dry-run {
   maid clean -nr $HOME/.maid/clean-up.rb
   maid clean -nr $HOME/.maid/sort-downloads.rb
 }
 
-## Search archived nvalt notes
-## Usage: vault SEARCHTERM
+## fn vault: Search archived nvalt notes. Usage: vault SEARCHTERM
 function vault {
   find "$HOME/Dropbox/Nvalt/Archive/" -type f -print0 | xargs -0 egrep -i "$@" | cut -d ':' -f 2
 }
 
-## Truncate each line of the input to X characters
-## Usage: cat file | shorten
+## fn shorten: Truncate each line of the input to X characters. Usage: cat file | shorten
 function shorten {
 	local helpstring="Truncate each line of the input to X characters\n\t-l              Shorten from left side\n\t-s STRING         replace truncated characters with STRING\n\n\t$ ls | shorten -s ... 15"
 	local ellip="" left=false
@@ -306,8 +231,7 @@ function shorten {
 	fi
 }
 
-## Create a new note in the Unsorted Evernote Notebook
-## Usage: qn TITLE NOTE_CONTENT
+## fn qn: Create a new note in the Unsorted Evernote Notebook. Usage: qn TITLE NOTE_CONTENT
 function qn {
   geeknote create --content "$2" --notebook Unsorted --title "$1"
 }
