@@ -235,3 +235,33 @@ function shorten {
 function qn {
   geeknote create --content "$2" --notebook Unsorted --title "$1"
 }
+
+function github-create () {
+    currentDir=${PWD##*/}
+    currentDir=${currentDir// /_}
+    userName=greyhoundforty
+
+    curl -s "https://api.github.com/user/repos?access_token=1b1ad46e3bae541b7d52d7403f305ced7e06360a" -d '{"name": "$currentDir"}' &&
+    echo "# $currentDir" > README.md &&
+    git init &&
+    git add -A . &&
+    git commit -m "first commit" &&
+    git remote add origin https://github.com/$userName/$currentDir.git &&
+    git push -u origin master
+}
+
+function here { open . }
+
+
+
+  
+
+
+## fn go_pi: Connect to Pi at the office through a remote jumphost
+function go_pi {
+  ssh ryan@169.46.3.91 -p 3376 -t 'ssh localhost -p 19999'
+}
+
+function getauth () {
+	echo $AUTHY | tr -d '\n' | pbcopy
+}

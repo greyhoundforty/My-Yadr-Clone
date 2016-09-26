@@ -34,6 +34,6 @@ runtime vim-improvements.vundle
 if filereadable(expand("~/.yadr/vim/.vundles.local"))
   source ~/.yadr/vim/.vundles.local
 endif
-
+Plugin 'trevordmiller/nova-vim'
 "Filetype plugin indent on is required by vundle
 filetype plugin indent on
