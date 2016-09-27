@@ -57,7 +57,9 @@ tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | s
 function msh { mosh --ssh='ssh -p "$1"' "$2"; }
 
 ## fn pwgen: Generate random 16 character password
-function pwgen { openssl rand -base64 16;echo; }
+function pwgen { 
+  LC_ALL=C tr -dc "[:alpha:][:alnum:][:special:]" < /dev/urandom | head -c 20 | pbcopy
+  }
 
 ## fn hist: Search the .zhistory file. Usage: hist thing
 function hist { egrep "$@" $HOME/.zhistory | cut -d ';' -f 2 }
