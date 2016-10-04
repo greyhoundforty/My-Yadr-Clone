@@ -267,3 +267,7 @@ function go_pi {
 function getauth () {
 	echo $AUTHY | tr -d '\n' | pbcopy
 }
+
+function decode() {
+   python -m base64 -d
+}
