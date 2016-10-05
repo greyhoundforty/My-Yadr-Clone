@@ -65,7 +65,7 @@ function pwgen {
 function hist { egrep "$@" $HOME/.zhistory | cut -d ';' -f 2 }
 
 ## fn oldhist: Search my pre-reload .zhistory file 
-function oldhist { egrep "$@" $HOME/Dropbox/OSX/tycho_pre_reload.zhistory |  cut -d ';' -f 2 }
+function oldhist { egrep "$@" $HOME/Dropbox/OSX/oldhist.zhistory |  cut -d ';' -f 2 }
 
 ## fn st: Get human readable number for file permissions. Usage: st FILENAME
 function st { stat -c '%n %a' "$@"; }
