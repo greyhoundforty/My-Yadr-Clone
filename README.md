@@ -8,6 +8,7 @@
     # Yet Another Dotfile Repo v1.1
     # Now with Prezto and Vundle!
 
+## Get started
 
     sh -c "`curl -fsSL https://raw.githubusercontent.com/greyhoundforty/dotfiles/master/install.sh`"
 
