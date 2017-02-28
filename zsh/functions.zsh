@@ -62,10 +62,10 @@ function pwgen {
   }
 
 ## fn hist: Search the .zhistory file. Usage: hist thing
-function hist { egrep "$@" $HOME/.zhistory | cut -d ';' -f 2 }
+function hist { egrep "$@" ${HOME}/Dropbox/.zhistory | cut -d ';' -f 2 }
 
 ## fn oldhist: Search my pre-reload .zhistory file 
-function oldhist { egrep "$@" $HOME/Dropbox/OSX/oldhist.zhistory |  cut -d ';' -f 2 }
+function oldhist { egrep "$@" $HOME/Dropbox/OSX/oldhist.zhistory }
 
 ## fn st: Get human readable number for file permissions. Usage: st FILENAME
 function st { stat -c '%n %a' "$@"; }
@@ -271,3 +271,32 @@ function getauth () {
 function decode() {
    python -m base64 -d
 }
+
+# List all my VSI's on the SE Demo account
+function lsvsi() {
+  slcli --format raw vs list -D ryantiffany.me
+  slcli --format raw vs list -D tinylab.info
+  slcli --format raw vs list -D tinylayer.net
+
+}
+
+# List all my Servers on the SE Demo account
+function lssrv() {
+  slcli --format raw server list -D ryantiffany.me
+  slcli --format raw server list -D tinylab.info
+  slcli --format raw server list -D tinylayer.net
+}
+
+function google() {
+    search=""
+    echo "Googling: $@"
+      for term in $@; do
+          search="$search%20$term"
+      done
+      open "http://www.google.com/search?q=$search"
+}
+
+
+function srch() { noglob find "$HOME/Dropbox/OSX/" -iname "*.zhistory" -print0 | xargs -0 egrep "$@" | cut -d ';' -f 2 }
+
+

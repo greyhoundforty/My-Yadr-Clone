@@ -60,8 +60,6 @@ if [ $MACVIM_INSTALLED -eq 0 ]; then
   alias vim="mvim -v"
 fi
 
-alias expose='/Users/ryan/Repos/Expose/expose.sh'
-
 alias cp='noglob cp'
 # mimic vim functions
 alias :q='exit'
@@ -197,7 +195,7 @@ alias pmj='python -m json.tool'
 alias py='python'
 alias ai='apm install'
 alias au='apm update'
-alias brewu='brew update  && brew upgrade --all && brew cleanup && brew prune && brew doctor'
+alias brewu='brew update  && brew upgrade && brew cleanup && brew prune && brew doctor'
 alias eating='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/foodtracking.taskpaper now -s food'
 alias music='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/tracking.taskpaper now -s music'
 alias movie='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/tracking.taskpaper now -s movies'
