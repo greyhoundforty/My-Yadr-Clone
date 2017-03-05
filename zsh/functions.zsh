@@ -284,8 +284,10 @@ function lsvsi() {
 function lssrv() {
   slcli --format raw server list -D ryantiffany.me
   slcli --format raw server list -D tinylab.info
-  slcli --format raw server list -D tinylayer.net
+  slcli --format raw server list -D ryantiffany.us
+
 }
+
 
 function google() {
     search=""
