@@ -10,6 +10,8 @@
 
 ## Get started
 
+Public Dotfiles Install Script
+
     sh -c "`curl -fsSL https://raw.githubusercontent.com/greyhoundforty/dotfiles/master/install.sh`"
 
 
