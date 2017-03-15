@@ -255,14 +255,16 @@ function github-create () {
 function here { open . }
 
 
+function docker-ip() {
+        docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$@"
+      }
 
-  
-
-
-## fn go_pi: Connect to Pi at the office through a remote jumphost
-function go_pi {
-  ssh ryan@169.46.3.91 -p 3376 -t 'ssh localhost -p 19999'
+function getbm() {
+          echo "$IBMBM_PASSWORD" | tr -d '\n' | pbcopy
 }
+
+function gotmp() { mkdir -p "$HOME/tmp/$@" && cd "$_" }
+
 
 function getauth () {
 	echo $AUTHY | tr -d '\n' | pbcopy
@@ -284,21 +286,16 @@ function lsvsi() {
 function lssrv() {
   slcli --format raw server list -D ryantiffany.me
   slcli --format raw server list -D tinylab.info
-  slcli --format raw server list -D ryantiffany.us
-
-}
-
-
-function google() {
-    search=""
-    echo "Googling: $@"
-      for term in $@; do
-          search="$search%20$term"
-      done
-      open "http://www.google.com/search?q=$search"
+  slcli --format raw server list -D tinylayer.net
 }
 
 
 function srch() { noglob find "$HOME/Dropbox/OSX/" -iname "*.zhistory" -print0 | xargs -0 egrep "$@" | cut -d ';' -f 2 }
 
+function prev() {
+  PREV=$(fc -lrn | head -n 1)
+  sh -c "pet new `printf %q "$PREV"`"
+}
 
+function dnuke() { docker stop "$@" && docker rm "$@" }
+function ns() { note list | grep -E -B1 "$@" }
