@@ -33,7 +33,7 @@ function scrap {
 
 ## fn atom: Launch Atom with the given file opened and fork to background. Usage: atom file.txt
 function atm {
-	$HOME//Applications/Atom.app/Contents/MacOS/Atom "$1" &> /dev/null &
+	/Applications/Atom.app/Contents/MacOS/Atom "$1" &> /dev/null &
 }
 
 ## fn cdls:  Changes to a directory and lists its contents. Usage: cdls /var/foo/bar
