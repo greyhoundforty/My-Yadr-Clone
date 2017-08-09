@@ -15,3 +15,5 @@ vim/sessions
 bin/subl
 tags
 git/gitconfig
+.DS_Store
+zsh/.DS_Store
