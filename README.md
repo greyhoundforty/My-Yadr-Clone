@@ -11,7 +11,7 @@
 ## Get started
 
 
-    sh -c "`curl -fsSL https://raw.githubusercontent.com/greyhoundforty/dotfiles/master/install.sh`"
+    sh -c "`curl -fsSL https://raw.githubusercontent.com/greyhoundforty/My-Yadr-Clone/master/install.sh`"
 
 
 
