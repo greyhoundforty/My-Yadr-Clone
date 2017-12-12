@@ -173,7 +173,7 @@ alias rdmr='rake db:migrate:redo'
 alias hpr='hub pull-request'
 alias grb='git recent-branches'
 
-alias sed='gsed'
+#alias sed='gsed'
 # Finder
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
