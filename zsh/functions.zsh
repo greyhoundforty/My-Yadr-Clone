@@ -149,3 +149,10 @@ function trav() {
         fi
         open -a /Applications/Setapp/TaskPaper.app "$todofile"
 }
+
+function servers() {
+LINKY='\033[0;41m'
+NC='\033[0m'
+
+for i in `cat ~/Dropbox/domains.txt`; do echo -e "${LINKY}\nVirtual Servers\n for domain "$i"${NC}";slcli --format raw vs list -D "$i"; echo "${LINKY}\nBare Metal Servers\n for domain "$i"${NC}";slcli --format raw server list -D "$i";done
+}
