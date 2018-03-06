@@ -182,10 +182,8 @@ alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall F
 # Homebrew
 alias _='sudo'
 alias tmn='tmux new-window -n "$@"'
-alias prm=". ~/bin/prm/prm.sh"
 alias dls="python /Users/ryan/Repos/misc/TaskPaper-Parser/tpp.py /Users/ryan/Dropbox/Listacular/Everything.taskpaper"
 alias grepno="grep --color=never -n -E '.*'"
-alias td='tugboat droplets'
 alias todo_soon="todo -q 'today, tomorrow'"
 
 
@@ -208,4 +206,8 @@ alias sldev='slcli --config ~/.dev_sl'
 alias update='brewu && apm update -c false'
 alias graph="git log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order"
 alias jrnl=" jrnl"
-
+alias prm=". $HOME/bin/prm/prm.sh"
+#alias na="/Users/ryan/bin/na.sh"
+alias pip="pip2"
+alias colout="python2.7 -mcolout.colout -r colors"
+alias 1pass=" 1pass"
