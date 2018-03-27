@@ -21,7 +21,6 @@ alias yip='yadr init-plugins'
 # PS
 alias psa="ps aux"
 alias psg="ps aux | grep "
-alias psr='ps aux | grep ruby'
 
 # Moving around
 alias cdb='cd -'
@@ -161,12 +160,6 @@ alias k9='kill -9'
 # Gem install
 alias sgi='sudo gem install --no-ri --no-rdoc'
 
-# TODOS
-# This uses NValt (NotationalVelocity alt fork) - http://brettterpstra.com/project/nvalt/
-# to find the note called 'todo'
-# Forward port 80 to 3000
-alias portforward='sudo ipfw add 1000 forward 127.0.0.1,3000 ip from any to any 80 in'
-
 alias rdm='rake db:migrate'
 alias rdmr='rake db:migrate:redo'
 
@@ -182,32 +175,23 @@ alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall F
 # Homebrew
 alias _='sudo'
 alias tmn='tmux new-window -n "$@"'
-alias dls="python /Users/ryan/Repos/misc/TaskPaper-Parser/tpp.py /Users/ryan/Dropbox/Listacular/Everything.taskpaper"
-alias grepno="grep --color=never -n -E '.*'"
-alias todo_soon="todo -q 'today, tomorrow'"
-
-
-alias d.='desk .'
-alias dit="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock nate/dockviz images -t"
 alias pmj='python -m json.tool'
-alias py='python'
 alias ai='apm install'
 alias au='apm update'
 alias brewu='brew update  && brew upgrade && brew cleanup && brew prune && brew doctor'
-alias eating='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/foodtracking.taskpaper now -s food'
-alias music='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/tracking.taskpaper now -s music'
-alias movie='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/tracking.taskpaper now -s movies'
-alias book='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/tracking.taskpaper now -s books'
-alias misc='doing -f ~/Dropbox/Taskmator\ -\ TaskPaper\ compatible\ with\ Reminders\ for\ iOS/tracking.taskpaper now -s misc'
 alias slm='slcli --config ~/.slmaster'
 alias slp='slcli --config ~/.personal'
 alias vlc='~/Applications/VLC.app/Contents/MacOS/VLC'
 alias sldev='slcli --config ~/.dev_sl'
-alias update='brewu && apm update -c false'
-alias graph="git log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order"
-alias jrnl=" jrnl"
 alias prm=". $HOME/bin/prm/prm.sh"
 #alias na="/Users/ryan/bin/na.sh"
-alias pip="pip2"
 alias colout="python2.7 -mcolout.colout -r colors"
 alias 1pass=" 1pass"
+# Shortcuts
+alias copyssh="pbcopy < $HOME/.ssh/id_rsa.pub"
+alias reloadcli="source $HOME/.zshrc"
+alias reloaddns="dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
+alias ll="$(brew --prefix coreutils)/libexec/gnubin/ls -ahlF --color --group-directories-first"
+alias weather="curl -4 http://wttr.in"
+alias shrug="echo '¯\_(ツ)_/¯' | pbcopy"
+
